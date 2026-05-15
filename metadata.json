@@ -1,0 +1,6 @@
+{
+  "name": "BloxScript Hub",
+  "description": "A premium marketplace for high-performance Roblox scripts, featuring AI-powered search and community-vetted resources.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

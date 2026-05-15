@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "Script": {
+      "title": "Script",
+      "description": "A Roblox script listing in the store.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "game": { "type": "string", "description": "Target Roblox game (e.g., Blox Fruits, Pet Simulator 99)" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "isPremium": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "viewCount": { "type": "number" },
+        "purchaseCount": { "type": "number" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "scriptCode": { "type": "string", "description": "The actual script or a private link (only for purchasers)" }
+      },
+      "required": ["title", "description", "price", "game", "authorId", "authorName"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Extended user data for the marketplace.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "balance": { "type": "number" },
+        "purchasedScriptIds": { "type": "array", "items": { "type": "string" } },
+        "role": { "type": "string", "enum": ["user", "vendor", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "A record of a script purchase.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "scriptId": { "type": "string" },
+        "pricePaid": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A user review for a script.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "scriptId": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/scripts": {
+      "schema": "Script",
+      "description": "Public script marketplace listings."
+    },
+    "/users": {
+      "schema": "UserProfile",
+      "description": "User profiles and inventory."
+    },
+    "/purchases": {
+      "schema": "Purchase",
+      "description": "Transaction history."
+    },
+    "/scripts/{scriptId}/reviews": {
+      "schema": "Review",
+      "description": "Reviews for a specific script."
+    },
+    "/scripts/{scriptId}/private/data": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" }
+        }
+      },
+      "description": "Secure script code accessible only to purchasers."
+    }
+  }
+}
